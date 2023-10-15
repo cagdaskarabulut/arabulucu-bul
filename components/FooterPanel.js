@@ -56,7 +56,7 @@ const FooterPanel = () => {
 
   return (
     <div className={styles.footerStyle}>
-      <MyGrid leftContent={<LeftContent />} rightContent={<RightContent />} contentPosition="center" />
+      <MyGrid leftContent={<LeftContent />} contentPosition="center" isOneFullContent={true} />
     </div>
   );
 };
