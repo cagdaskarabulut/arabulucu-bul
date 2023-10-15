@@ -28,7 +28,7 @@ const FooterPanel = () => {
     return (
       <>
         <div className={styles.footerContentStyle}>
-          © Copyright 2023 Arabulucu.info.
+          © Copyright 2023 Arabulucu-bul.com.tr.
           {isMobile ? " " : <br />}
           Tüm Hakları Saklıdır.
           {isMobile ? " " : <br />}
@@ -45,9 +45,9 @@ const FooterPanel = () => {
           Bu sitede paylaşılan bilgiler yalnızca bilgilendirme amaçlı olup,
           Türkiye Cumhuriyeti Barolar Birliği’nin ilgili düzenlemeleri
           uyarınca reklam, teklif, hukuki öneri veya danışmanlık teşkil etmez.
-          Sitede sunulan bilgiler hakkında Arabulucu.info sitesi sorumluluk
+          Sitede sunulan bilgiler hakkında Arabulucu-bul.com.tr sitesi sorumluluk
           kabul etmez. Bu sitede paylaşılan bilgiler, ve sair veriler
-          Arabulucu.info'a ait olup, büronun yazılı izni olmaksızın
+          Arabulucu-bul.com.tr'a ait olup, büronun yazılı izni olmaksızın
           kullananlar hakkında yasal işlem yapılır.
         </div>
       </>

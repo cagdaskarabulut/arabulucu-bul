@@ -101,7 +101,7 @@ function MenuPanelMobile() {
               justifyContent: "space-around",
             }}
           >
-            <h1 className={styles.logoStyle}>Arabulucu.info</h1>
+            <h1 className={styles.logoStyle}>Arabulucu-bul.com.tr</h1>
           </Box>
 
           <Box

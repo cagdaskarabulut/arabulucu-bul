@@ -8,7 +8,7 @@ const MetaPanel = ({
 }) => {
   const router = useRouter();
   let siteName = "Arabulucu";
-  let siteUrl = "https://www.arabulucu.info";
+  let siteUrl = "https://www.arabulucu-bul.com.tr";
   
   let currentFullPathUrl = siteUrl + router.asPath;
   let imageFullPathUrl = siteUrl + imagePath;
@@ -83,7 +83,7 @@ const MetaPanel = ({
       <meta name="doc-class" content="Published" />
       <meta name="doc-rights" content="Public" />
       <meta property="og:type" content="website" />
-      <meta httpEquiv="Copyright" content="Copyright 2023 Arabulucu.info" />
+      <meta httpEquiv="Copyright" content="Copyright 2023 Arabulucu-bul.com.tr" />
       <meta httpEquiv="Reply-to" content="oznurilhan@windowslive.com" />
       <meta name="mobile-web-app-capable" content="yes" />
     </Head>
