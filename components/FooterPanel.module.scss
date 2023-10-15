@@ -1,0 +1,16 @@
+@import "../styles/mixins.scss";
+@import "../styles/colors.scss";
+@import "../styles/globals.scss";
+
+.footerStyle {
+  background-color: $white-hover !important;
+
+  .footerContentStyle {
+    display: flex;
+    padding: 30px;
+
+    @include tablet-or-less {
+      padding: 10px;
+    }
+  }
+}
