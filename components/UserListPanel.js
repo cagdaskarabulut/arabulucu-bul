@@ -15,7 +15,7 @@ export default function Index() {
   }
   return (
     <>
-    <Card variant="outlined" sx={{ width: 500, fontSize:16 }}>
+    <Card variant="outlined" sx={{ maxWidth: 500, fontSize:16 }}>
       <CardContent>
         
         <h3>Avukat Arabulucu

@@ -111,7 +111,7 @@ function MenuPanelMobile() {
               justifyContent: "space-around",
             }}
           >
-            <Button
+            {/* <Button
               id="basic-button"
               className={styles.menuFont}
               aria-controls={open ? "basic-menu" : undefined}
@@ -119,7 +119,7 @@ function MenuPanelMobile() {
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
               endIcon={<LocalPhoneIcon />}
-            ></Button>
+            ></Button> */}
           </Box>
         </Toolbar>
       </Container>
