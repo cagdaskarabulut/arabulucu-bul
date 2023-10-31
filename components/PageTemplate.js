@@ -6,6 +6,7 @@ import { MOBILE_SCREEN_SIZE } from "../constants/GeneralConstants";
 import useWindowSize from "@rooks/use-window-size";
 import FooterPanel from "./FooterPanel";
 import MenuPanelMobile from "./MenuPanelMobile";
+import { Analytics } from '@vercel/analytics/react';
 
 //- Açılış sayfası , Hizmetlerimiz sayfası
 const PageTemplate = ({ content }) => {
@@ -49,6 +50,7 @@ const PageTemplate = ({ content }) => {
       <div className={styles.FooterStyle}>
         <FooterPanel />
       </div>
+      <Analytics />
     </div>
   );
 }

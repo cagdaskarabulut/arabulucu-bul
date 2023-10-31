@@ -15,6 +15,7 @@
     "@mui/material": "^5.14.13",
     "@mui/styled-engine-sc": "^6.0.0-alpha.1",
     "@rooks/use-window-size": "^4.11.2",
+    "@vercel/analytics": "^1.1.1",
     "next": "13.5.4",
     "react": "^18",
     "react-dom": "^18",
