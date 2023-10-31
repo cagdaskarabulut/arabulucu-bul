@@ -10,6 +10,9 @@ import { useRouter } from "next/router";
 
 export default function Index() {
   const router = useRouter();
+  function handleEmailClick() {
+    window.location.href = "mailto:" + "oznurilhan@windowslive.com";
+  }
   return (
     <>
     <Card variant="outlined" sx={{ width: 500, fontSize:16 }}>
@@ -21,9 +24,12 @@ export default function Index() {
         2010 YILINDA MALTEPE ÜNİVERSİTESİ HUKUK FAKÜLTESİNDEN MEZUN OLMASININ ARDINDAN ÖZEL HUKUK ALANINDA ÇALIŞMA HAYATI OLMUŞTUR. 2020 YILINDA ARABULUCULUK DAİRE BAŞKANLIĞI SİCİLİNE KAYIT OLARAK 12511 SİCİL NOLU ARBULUCU OLARAK GÖREV YAPMAYA BAŞLAMIŞTIR.
         </p>
       </CardContent>
-      <CardActions>
+      <CardActions style={{justifyContent: 'space-between'}}>
         <Button href={"https://www.arabulucu.info/"} size="small">
           Kişisel Web Sitesi
+        </Button>
+        <Button size="small" onClick={handleEmailClick}>
+          İletişim
         </Button>
       </CardActions>
     </Card>
