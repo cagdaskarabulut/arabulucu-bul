@@ -1,6 +1,7 @@
 import Head from "next/head";
 import React, { Component } from "react";
 import { useRouter } from "next/router";
+import Script from "next/script";
 
 //- Google için meta sayfası
 const MetaPanel = ({
@@ -16,6 +17,17 @@ const MetaPanel = ({
   authorContent = (authorContent == null || authorContent == "") ? "Öznur İlhan Karabulut" : authorContent;
   return (
     <Head>
+
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-8KTDF3483E" />
+      <Script id="google-analytics">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+ 
+          gtag('config', 'G-8KTDF3483E');
+        `}
+      </Script>
 
       {(title != null && title != "") && (
         <>
