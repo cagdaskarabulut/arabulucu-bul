@@ -6,10 +6,8 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Link } from '@mui/material';
-import { useRouter } from "next/router";
 
 export default function Index() {
-  const router = useRouter();
   function handleEmailClick() {
     window.location.href = "mailto:" + "oznurilhan@windowslive.com";
   }
@@ -28,7 +26,8 @@ export default function Index() {
         <Button href={"https://www.arabulucu.info/"} size="small">
           Kişisel Web Sitesi
         </Button>
-        <Button size="small" onClick={handleEmailClick}>
+        {/* <Button size="small" onClick={handleEmailClick}> */}
+        <Button size="small" onClick={() => window.open ('https://arabulucu.info/iletisim', '_ blank')}>
           İletişim
         </Button>
       </CardActions>
