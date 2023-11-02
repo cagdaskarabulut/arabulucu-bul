@@ -9,7 +9,7 @@ import { Link } from '@mui/material';
 
 export default function Index() {
   function handleEmailClick() {
-    window.location.href = "mailto:" + "oznurilhan@windowslive.com";
+    window.location.href = "mailto:"+"oznurilhan@windowslive.com";
   }
   return (
     <>
