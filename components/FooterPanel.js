@@ -38,17 +38,7 @@ const FooterPanel = () => {
     );
   };
 
-  const RightContent = () => {
-    return (
-      <>
-        <div className={styles.footerContentStyle}>
-          
-        </div>
-      </>
-    );
-  };
-
- const LeftContent = () => {
+ const RightContent = () => {
     return (
       <>
         <div className={styles.footerContentStyle}>
