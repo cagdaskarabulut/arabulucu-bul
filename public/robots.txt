@@ -1,6 +1,6 @@
-# *
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /api/
 
-# Sitemaps
-Sitemap: https://www.arabulucu-bul.com.tr/sitemap.xml
+Sitemap: https://www.arabulucubul.com/sitemap.xml

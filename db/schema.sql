@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS "arabulucubul-arabulucu" (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    registration_number VARCHAR(100) NOT NULL UNIQUE,
+    biography TEXT,
+    website_url VARCHAR(255),
+    email VARCHAR(255) NOT NULL UNIQUE,
+    profile_image_url VARCHAR(255),
+    status VARCHAR(20) DEFAULT 'pending',
+    active BOOLEAN DEFAULT false,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS "arabulucubul-admin" (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
