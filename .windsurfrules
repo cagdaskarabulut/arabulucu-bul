@@ -1,0 +1,4 @@
+Arabulucuların kendi bilgilerini(isim,sicil no,özgeçmiş,web adresi, mail adresi) girip siteye üyelik için başvuru yapabildiği,
+Admin tarafından bu başvuruların admin ekranından değerlendirilerek adminin onayladığı arabulucuların anasayfada bilgilerinin birer kullanıcı kartı olarak görüntülendiği,
+Ana sayfada mouse ile aşağıya inildikçe sıradaki arabulucu kartlarının görüntülendiği
+web sitesi geliştirmeyi hedefliyorum.
