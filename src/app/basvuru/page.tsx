@@ -55,7 +55,8 @@ export default function Basvuru() {
         const data = await response.json();
         setHata(data.error || "Başvuru gönderilirken bir hata oluştu");
       }
-    } catch (error) {
+    } catch (err) {
+      console.error(err);
       setHata("Başvuru gönderilirken bir hata oluştu");
     } finally {
       setYukleniyor(false);

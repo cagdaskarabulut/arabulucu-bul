@@ -3,7 +3,6 @@
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { RegistrationModal } from "./components/RegistrationModal";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -15,6 +14,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta
+          name="description"
+          content="Türkiye&apos;nin en kapsamlı arabulucu arama platformu"
+        />
+        <meta
+          property="og:description"
+          content="Türkiye&apos;nin en kapsamlı arabulucu arama platformu"
+        />
+      </head>
       <body
         className={cn(
           "min-h-screen bg-gradient-to-b from-blue-50 to-white",
@@ -48,20 +57,20 @@ export default function RootLayout({
                 </h3>
                 <p className="mb-2">
                   Bu sitede paylaşılan bilgiler yalnızca bilgilendirme amaçlı
-                  olup, Türkiye Cumhuriyeti Barolar Birliği'nin ilgili
+                  olup, Türkiye Cumhuriyeti Barolar Birliği&apos;nin ilgili
                   düzenlemeleri uyarınca reklam, teklif, hukuki öneri veya
                   danışmanlık teşkil etmez.
                 </p>
                 <p className="mb-2">
                   Sitede sunulan bilgiler hakkında Arabulucu-bul.com.tr sitesi
                   sorumluluk kabul etmez. Bu sitede paylaşılan bilgiler, ve sair
-                  veriler Arabulucu-bul.com.tr'a ait olup, bütünün yazılı izni
-                  olmaksızın kullanılamaz.
+                  veriler Arabulucu-bul.com.tr&apos;a ait olup, bütünün yazılı
+                  izni olmaksızın kullanılamaz.
                 </p>
                 <p>
                   Bu internet sitesinde yer alan tüm bilgiler, 6325 sayılı Hukuk
-                  Uyuşmazlıklarında Arabuluculuk Kanunu ve ilgili yönetmeliklere
-                  uygun olarak hazırlanmıştır.
+                  Uyuşmazlıklarında Arabuluculuk Kanunu ve ilgili
+                  yönetmeliklere uygun olarak hazırlanmıştır.
                 </p>
               </div>
               <div>

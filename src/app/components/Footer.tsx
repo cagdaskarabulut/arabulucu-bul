@@ -11,14 +11,14 @@ export function Footer() {
             </h3>
             <p className="mb-2">
               Bu sitede paylaşılan bilgiler yalnızca bilgilendirme amaçlı
-              olup, Türkiye Cumhuriyeti Barolar Birliği'nin ilgili
+              olup, Türkiye Cumhuriyeti Barolar Birliği&apos;nin ilgili
               düzenlemeleri uyarınca reklam, teklif, hukuki öneri veya
               danışmanlık teşkil etmez.
             </p>
             <p className="mb-2">
               Sitede sunulan bilgiler hakkında Arabulucu-bul.com.tr sitesi
               sorumluluk kabul etmez. Bu sitede paylaşılan bilgiler, ve sair
-              veriler Arabulucu-bul.com.tr'a ait olup, bütünün yazılı izni
+              veriler Arabulucu-bul.com.tr&apos;a ait olup, bütünün yazılı izni
               olmaksızın kullanılamaz.
             </p>
             <p>
@@ -45,9 +45,14 @@ export function Footer() {
             </p>
           </div>
         </div>
+        <p className="text-sm text-gray-500">
+          &copy; 2024 Arabulucu Bul. Tüm hakları saklıdır.
+        </p>
+        <p className="text-xs text-gray-400">
+          Arabulucu Bul, Türkiye&apos;deki arabulucuları bir araya getiren bir platformdur.
+        </p>
         <p className="text-center mt-8">
-          © {new Date().getFullYear()} Arabulucu-bul.com.tr. Tüm Hakları
-          Saklıdır.
+          &copy; {new Date().getFullYear()} Arabulucu-bul.com.tr. Tüm Hakları Saklıdır.
         </p>
       </div>
     </footer>

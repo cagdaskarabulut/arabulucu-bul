@@ -53,7 +53,7 @@ export async function GET(request: Request) {
 
     let query = `SELECT * FROM "arabulucubul-arabulucu" WHERE active = true`;
     const queryParams = [];
-    let paramCount = 1;
+    const paramCount = 1;
     let pattern = '';
 
     if (harf !== 'hepsi') {

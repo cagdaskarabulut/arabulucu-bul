@@ -6,7 +6,6 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import Image from "next/image";
 import "../../../app/globals.css";
 
 export default function AdminGiris() {
@@ -38,7 +37,8 @@ export default function AdminGiris() {
       } else {
         setHata(data.error || "Giriş yapılırken bir hata oluştu");
       }
-    } catch (error) {
+    } catch (err) {
+      console.error(err);
       setHata("Giriş yapılırken bir hata oluştu");
     } finally {
       setYukleniyor(false);

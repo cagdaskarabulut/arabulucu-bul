@@ -1,11 +1,10 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import MediatorCard from "./components/MediatorCard";
 import Pagination from "@/components/Pagination";
 import "../app/globals.css";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,43 +25,16 @@ interface Arabulucu {
 const TURKCE_HARFLER = ['Hepsi', 'A', 'B', 'C', 'Ç', 'D', 'E', 'F', 'G', 'Ğ', 'H', 'I', 'İ', 'J', 'K', 'L', 'M', 'N', 'O', 'Ö', 'P', 'R', 'S', 'Ş', 'T', 'U', 'Ü', 'V', 'Y', 'Z'];
 const SAYFA_BOYUTU = 9;
 
-// Türkçe karakter eşleştirme haritası
-const TURKCE_KARAKTER_MAP: { [key: string]: string } = {
-  'Ç': 'c',
-  'Ğ': 'g',
-  'İ': 'i',
-  'I': 'i',
-  'Ö': 'o',
-  'Ş': 's',
-  'Ü': 'u',
-  'ç': 'c',
-  'ğ': 'g',
-  'ı': 'i',
-  'i': 'i',
-  'ö': 'o',
-  'ş': 's',
-  'ü': 'u'
-};
-
 export default function Home() {
-  const router = useRouter();
-  const [arabulucular, setArabulucular] = useState<Arabulucu[]>([]);
   const [sayfa, setSayfa] = useState(1);
   const [toplamSayfa, setToplamSayfa] = useState(1);
   const [yukleniyor, setYukleniyor] = useState(false);
   const [seciliHarf, setSeciliHarf] = useState('Hepsi');
   const [filtrelenmisArabulucular, setFiltrelenmisArabulucular] = useState<Arabulucu[]>([]);
 
-  const turkceKarakterDonustur = (metin: string): string => {
-    return metin
-      .split('')
-      .map(harf => TURKCE_KARAKTER_MAP[harf] || harf.toLowerCase())
-      .join('');
-  };
-
-  const arabuluculariGetir = async () => {
+  const arabuluculariGetir = useCallback(async () => {
+    setYukleniyor(true);
     try {
-      setYukleniyor(true);
       const secilenHarf = seciliHarf === 'Hepsi' ? 'hepsi' : seciliHarf.toLowerCase();
       
       const response = await fetch(
@@ -71,14 +43,13 @@ export default function Home() {
       const data = await response.json();
       
       setFiltrelenmisArabulucular(data.arabulucular);
-      setArabulucular(data.arabulucular);
       setToplamSayfa(Math.ceil(data.toplam / SAYFA_BOYUTU));
     } catch (error) {
       console.error("Arabulucular yüklenirken hata oluştu:", error);
     } finally {
       setYukleniyor(false);
     }
-  };
+  }, [sayfa, seciliHarf]);
 
   useEffect(() => {
     setSayfa(1);
@@ -86,7 +57,7 @@ export default function Home() {
 
   useEffect(() => {
     arabuluculariGetir();
-  }, [sayfa, seciliHarf]);
+  }, [arabuluculariGetir]);
 
   const sayfaDegistir = (yeniSayfa: number) => {
     setSayfa(yeniSayfa);
@@ -101,7 +72,7 @@ export default function Home() {
             Arabulucu Listesi
           </h2>
           <p className="text-[var(--primary-color)] max-w-2xl mx-auto mb-8">
-            Türkiye'nin önde gelen arabulucularına buradan ulaşabilirsiniz. İletişim bilgileri ve web siteleri için kartların alt kısmındaki butonları kullanabilirsiniz.
+            Türkiye&apos;nin önde gelen arabulucularına buradan ulaşabilirsiniz. İletişim bilgileri ve web siteleri için kartların alt kısmındaki butonları kullanabilirsiniz.
           </p>
 
           {/* Mobil ve tablet için dropdown menü */}
