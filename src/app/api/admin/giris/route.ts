@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
@@ -6,15 +7,22 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    console.log('Gelen istek:', body);
-
     const { username, password } = body;
 
-    console.log('Gelen bilgiler:', { username, password });
-
     if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-      console.log('Giriş başarılı');
-      return NextResponse.json({ success: true });
+      const response = NextResponse.json({ success: true });
+      
+      // Admin token'ı oluştur (24 saat geçerli)
+      response.cookies.set({
+        name: 'admin_token',
+        value: 'authenticated',
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24 // 24 saat
+      });
+
+      return response;
     }
 
     console.log('Giriş başarısız');

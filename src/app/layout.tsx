@@ -2,8 +2,7 @@
 
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { RegistrationModal } from "./components/RegistrationModal";
-import Link from "next/link";
+import { Header } from "./components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,18 +30,9 @@ export default function RootLayout({
         )}
         suppressHydrationWarning
       >
+        
         {/* Navigation Bar */}
-        <nav className="bg-gradient-to-r from-blue-800 to-blue-600 text-white shadow-lg">
-          <div className="container mx-auto px-4 py-6">
-            <div className="flex items-center justify-between">
-              <Link href="/" className="logo text-4xl">
-                <span>Arabulucu</span>{" "}
-                <span>Bul</span>
-              </Link>
-              <RegistrationModal />
-            </div>
-          </div>
-        </nav>
+        <Header />
 
         {/* Main Content */}
         <main>{children}</main>

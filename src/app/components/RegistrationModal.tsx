@@ -14,7 +14,7 @@ export function RegistrationModal() {
         onClick={() => router.push("/basvuru")}
         variant="secondary"
         size="lg"
-        className="bg-white text-blue-800 hover:bg-blue-50 transition-colors px-6 py-2 rounded-lg font-medium"
+        className="hidden md:flex bg-white text-blue-800 hover:bg-blue-50 transition-colors px-6 py-2 rounded-lg font-medium"
       >
         Arabulucu Olarak Kayıt Ol
       </Button>

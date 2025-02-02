@@ -5,6 +5,7 @@ import MediatorCard from "./components/MediatorCard";
 import Pagination from "@/components/Pagination";
 import "../app/globals.css";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,6 +27,7 @@ const TURKCE_HARFLER = ['Hepsi', 'A', 'B', 'C', 'Ç', 'D', 'E', 'F', 'G', 'Ğ', 
 const SAYFA_BOYUTU = 9;
 
 export default function Home() {
+  const router = useRouter();
   const [sayfa, setSayfa] = useState(1);
   const [toplamSayfa, setToplamSayfa] = useState(1);
   const [yukleniyor, setYukleniyor] = useState(false);
@@ -71,9 +73,17 @@ export default function Home() {
           <h2 className="text-4xl font-bold text-[var(--primary-color)] mb-4">
             Arabulucu Listesi
           </h2>
-          <p className="text-[var(--primary-color)] max-w-2xl mx-auto mb-8">
+          <p className="text-[var(--primary-color)] max-w-2xl mx-auto mb-4">
             Türkiye&apos;nin önde gelen arabulucularına buradan ulaşabilirsiniz. İletişim bilgileri ve web siteleri için kartların alt kısmındaki butonları kullanabilirsiniz.
           </p>
+
+          {/* Mobil için kayıt butonu */}
+          <Button
+            onClick={() => router.push("/basvuru")}
+            className="md:hidden bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 mb-8 mx-auto"
+          >
+            Arabulucu Olarak Kayıt Ol
+          </Button>
 
           {/* Mobil ve tablet için dropdown menü */}
           <div className="lg:hidden mb-8 px-4 w-full max-w-md mx-auto">
@@ -85,7 +95,7 @@ export default function Home() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent 
-                className="w-[var(--radix-dropdown-menu-trigger-width)] bg-white border-[var(--primary-color)] shadow-lg"
+                className="w-[var(--radix-dropdown-menu-trigger-width)] bg-white border-[var(--primary-color)] shadow-lg max-h-[60vh] overflow-y-auto"
                 align="center"
               >
                 {TURKCE_HARFLER.map((harf) => (
@@ -94,7 +104,7 @@ export default function Home() {
                     onClick={() => setSeciliHarf(harf)}
                     className={`py-3 text-base ${
                       seciliHarf === harf 
-                        ? "bg-[var(--primary-color)] text-white"
+                        ? "bg-orange-500 text-white hover:bg-orange-600"
                         : "hover:bg-[var(--primary-color)]/10"
                     }`}
                   >

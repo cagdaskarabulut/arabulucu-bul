@@ -49,8 +49,6 @@ export async function GET(request: Request) {
     const harf = searchParams.get('harf') || 'hepsi';
     const offset = (sayfa - 1) * limit;
 
-    console.log('Gelen harf:', harf); // Debug log
-
     let query = `SELECT * FROM "arabulucubul-arabulucu" WHERE active = true`;
     const queryParams = [];
     const paramCount = 1;
@@ -91,12 +89,7 @@ export async function GET(request: Request) {
     query += ` LIMIT $${paramCount} OFFSET $${paramCount + 1}`;
     queryParams.push(limit, offset);
 
-    console.log('SQL Query:', query); // Debug log
-    console.log('Query Params:', queryParams); // Debug log
-    console.log('Pattern:', pattern); // Debug log
-
     const result = await pool.query(query, queryParams);
-    console.log('Result rows:', result.rows); // Debug log
 
     const countQuery = `SELECT COUNT(*) FROM "arabulucubul-arabulucu" WHERE active = true${
       harf !== 'hepsi' ? ` AND LEFT(name, 1) SIMILAR TO '${pattern}'` : ''
@@ -106,9 +99,6 @@ export async function GET(request: Request) {
       countQuery,
       harf !== 'hepsi' ? [] : []
     );
-
-    console.log('Bulunan kayıt sayısı:', result.rows.length); // Debug log
-    console.log('İlk kayıt:', result.rows[0]); // Debug log
 
     return NextResponse.json({
       arabulucular: result.rows,

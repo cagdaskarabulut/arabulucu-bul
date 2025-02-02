@@ -8,8 +8,6 @@ export async function GET(request: Request) {
     const limit = parseInt(searchParams.get("limit") || "9");
     const offset = (sayfa - 1) * limit;
 
-    console.log("API Parametreleri:", { sayfa, limit, offset });
-
     const query = `
       SELECT * FROM "arabulucubul-arabulucu" 
       WHERE active = true 
@@ -22,11 +20,7 @@ export async function GET(request: Request) {
       LIMIT $1 OFFSET $2
     `;
 
-    console.log("SQL Sorgusu:", query);
-
     const result = await pool.query(query, [limit, offset]);
-
-    console.log("Bulunan kayıt sayısı:", result.rows.length);
 
     return NextResponse.json(result.rows);
   } catch (error) {
