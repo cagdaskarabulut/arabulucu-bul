@@ -21,7 +21,11 @@ interface Arabulucu {
   biography: string;
   website_url: string;
   email: string;
+  cities: string[];
+  expertise: string[];
 }
+
+import { SEHIRLER, TUM_UZMANLIKLAR } from '@/constants';
 
 const TURKCE_HARFLER = ['Hepsi', 'A', 'B', 'C', 'Ç', 'D', 'E', 'F', 'G', 'Ğ', 'H', 'I', 'İ', 'J', 'K', 'L', 'M', 'N', 'O', 'Ö', 'P', 'R', 'S', 'Ş', 'T', 'U', 'Ü', 'V', 'Y', 'Z'];
 const SAYFA_BOYUTU = 9;
@@ -32,15 +36,19 @@ export default function Home() {
   const [toplamSayfa, setToplamSayfa] = useState(1);
   const [yukleniyor, setYukleniyor] = useState(false);
   const [seciliHarf, setSeciliHarf] = useState('Hepsi');
+  const [seciliSehirler, setSeciliSehirler] = useState<string[]>(['Hepsi']);
+  const [seciliUzmanlik, setSeciliUzmanlik] = useState('Hepsi');
   const [filtrelenmisArabulucular, setFiltrelenmisArabulucular] = useState<Arabulucu[]>([]);
 
   const arabuluculariGetir = useCallback(async () => {
     setYukleniyor(true);
     try {
       const secilenHarf = seciliHarf === 'Hepsi' ? 'hepsi' : seciliHarf.toLowerCase();
+      const secilenSehirler = seciliSehirler.includes('Hepsi') ? 'hepsi' : seciliSehirler.join(',');
+      const secilenUzmanlik = seciliUzmanlik === 'Hepsi' ? 'hepsi' : encodeURIComponent(seciliUzmanlik);
       
       const response = await fetch(
-        `/api/arabulucu?sayfa=${sayfa}&limit=${SAYFA_BOYUTU}&harf=${secilenHarf}`
+        `/api/arabulucu?sayfa=${sayfa}&limit=${SAYFA_BOYUTU}&harf=${secilenHarf}&sehirler=${secilenSehirler}&uzmanlik=${secilenUzmanlik}`
       );
       const data = await response.json();
       
@@ -51,11 +59,11 @@ export default function Home() {
     } finally {
       setYukleniyor(false);
     }
-  }, [sayfa, seciliHarf]);
+  }, [sayfa, seciliHarf, seciliSehirler, seciliUzmanlik]);
 
   useEffect(() => {
     setSayfa(1);
-  }, [seciliHarf]);
+  }, [seciliHarf, seciliSehirler, seciliUzmanlik]);
 
   useEffect(() => {
     arabuluculariGetir();
@@ -74,7 +82,7 @@ export default function Home() {
             Arabulucu Listesi
           </h2>
           <p className="text-[var(--primary-color)] max-w-2xl mx-auto mb-4">
-          Sitemize kayıtlı arabulucuların bilgilerine ve iletişim detaylarına buradan ulaşabilirsiniz. Daha fazla bilgi için kartların alt kısmındaki butonları kullanabilirsiniz.
+            Sitemize kayıtlı arabulucuların bilgilerine ve iletişim detaylarına buradan ulaşabilirsiniz. Daha fazla bilgi için kartların alt kısmındaki butonları kullanabilirsiniz.
           </p>
 
           {/* Mobil için kayıt butonu */}
@@ -85,8 +93,9 @@ export default function Home() {
             Arabulucu Olarak Kayıt Ol
           </Button>
 
-          {/* Mobil ve tablet için dropdown menü */}
-          <div className="lg:hidden mb-8 px-4 w-full max-w-md mx-auto">
+          {/* Mobil ve tablet için dropdown menüler */}
+          <div className="lg:hidden mb-8 px-4 w-full max-w-md mx-auto space-y-4">
+            {/* İsim Filtresi */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="w-full text-base py-6">
@@ -113,25 +122,171 @@ export default function Home() {
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
+
+            {/* Şehir Filtresi */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="w-full text-base py-6 justify-between">
+                  {seciliSehirler.includes('Hepsi') ? 'Tüm Şehirler' : `${seciliSehirler.length} Şehir Seçili`}
+                  <ChevronDown className="h-5 w-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent 
+                className="w-[var(--radix-dropdown-menu-trigger-width)] bg-white border-[var(--primary-color)] shadow-lg max-h-[300px] overflow-y-auto"
+                align="start"
+              >
+                {SEHIRLER.map((sehir) => (
+                  <DropdownMenuItem
+                    key={sehir}
+                    onSelect={(e) => {
+                      e.preventDefault();
+                      if (sehir === 'Hepsi') {
+                        setSeciliSehirler(['Hepsi']);
+                      } else {
+                        const yeniSehirler = seciliSehirler.filter(s => s !== 'Hepsi');
+                        if (seciliSehirler.includes(sehir)) {
+                          setSeciliSehirler(yeniSehirler.filter(s => s !== sehir));
+                        } else {
+                          setSeciliSehirler([...yeniSehirler, sehir]);
+                        }
+                      }
+                    }}
+                    className="flex items-center space-x-2"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={seciliSehirler.includes(sehir)}
+                      onChange={() => {}}
+                      onClick={(e) => e.stopPropagation()}
+                      className="w-4 h-4"
+                    />
+                    <span className="text-base">{sehir}</span>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Uzmanlık Filtresi */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="w-full text-base py-6">
+                  {seciliUzmanlik === 'Hepsi' ? 'Tüm Uzmanlıklar' : seciliUzmanlik}
+                  <ChevronDown className="ml-2 h-5 w-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent 
+                className="w-[var(--radix-dropdown-menu-trigger-width)] bg-white border-[var(--primary-color)] shadow-lg"
+                align="center"
+              >
+                {TUM_UZMANLIKLAR.map((uzmanlik) => (
+                  <DropdownMenuItem
+                    key={uzmanlik}
+                    onClick={() => setSeciliUzmanlik(uzmanlik)}
+                    className={`py-3 text-base ${
+                      seciliUzmanlik === uzmanlik 
+                        ? "bg-orange-500 text-white hover:bg-orange-600"
+                        : "hover:bg-[var(--primary-color)]/10"
+                    }`}
+                  >
+                    {uzmanlik}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
-          {/* Masaüstü için buton grubu */}
-          <div className="hidden lg:flex flex-wrap justify-center gap-1 mb-8 max-w-6xl mx-auto">
-            {TURKCE_HARFLER.map((harf) => (
-              <Button
-                key={harf}
-                onClick={() => setSeciliHarf(harf)}
-                variant={seciliHarf === harf ? "default" : "outline"}
-                className={`min-w-[28px] h-[28px] text-sm ${
-                  harf === 'Hepsi' ? 'px-3' : 'px-0'} ${
-                  seciliHarf === harf 
-                    ? "selected-letter hover:shadow-[0_2px_10px_rgb(0,0,0,0.15)]" 
-                    : "border-[var(--primary-color)] text-[var(--primary-color)] hover:shadow-[0_2px_10px_rgb(0,0,0,0.15)]"
-                }`}
-              >
-                {harf}
-              </Button>
-            ))}
+          {/* Masaüstü için filtre grupları */}
+          <div className="hidden lg:block mb-8">
+            {/* Filtreler */}
+            <div className="flex justify-center gap-4">
+              {/* İsim Filtresi */}
+              <div className="w-64">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="w-full">
+                      {seciliHarf === 'Hepsi' ? 'İsme Göre Filtrele' : `${seciliHarf} ile Başlayanlar`}
+                      <ChevronDown className="ml-2 h-5 w-5" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-64 max-h-[300px] overflow-y-auto bg-white">
+                    {TURKCE_HARFLER.map((harf) => (
+                      <DropdownMenuItem
+                        key={harf}
+                        onClick={() => setSeciliHarf(harf)}
+                        className={seciliHarf === harf ? "bg-orange-500 text-white" : ""}
+                      >
+                        {harf === 'Hepsi' ? 'Tüm Arabulucular' : `${harf} ile Başlayanlar`}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+
+              {/* Şehir Filtresi */}
+              <div className="w-64">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="w-full justify-between">
+                      {seciliSehirler.includes('Hepsi') ? 'Tüm Şehirler' : `${seciliSehirler.length} Şehir Seçili`}
+                      <ChevronDown className="h-5 w-5" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-64 bg-white max-h-[300px] overflow-y-auto" align="start">
+                    {SEHIRLER.map((sehir) => (
+                      <DropdownMenuItem
+                        key={sehir}
+                        onSelect={(e) => {
+                          e.preventDefault();
+                          if (sehir === 'Hepsi') {
+                            setSeciliSehirler(['Hepsi']);
+                          } else {
+                            const yeniSehirler = seciliSehirler.filter(s => s !== 'Hepsi');
+                            if (seciliSehirler.includes(sehir)) {
+                              setSeciliSehirler(yeniSehirler.filter(s => s !== sehir));
+                            } else {
+                              setSeciliSehirler([...yeniSehirler, sehir]);
+                            }
+                          }
+                        }}
+                        className="flex items-center space-x-2"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={seciliSehirler.includes(sehir)}
+                          onChange={() => {}}
+                          onClick={(e) => e.stopPropagation()}
+                          className="w-4 h-4"
+                        />
+                        <span>{sehir}</span>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+
+              {/* Uzmanlık Filtresi */}
+              <div className="w-64">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="w-full">
+                      {seciliUzmanlik === 'Hepsi' ? 'Tüm Uzmanlıklar' : seciliUzmanlik}
+                      <ChevronDown className="ml-2 h-5 w-5" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-64 bg-white max-h-[300px] overflow-y-auto">
+                    {TUM_UZMANLIKLAR.map((uzmanlik) => (
+                      <DropdownMenuItem
+                        key={uzmanlik}
+                        onClick={() => setSeciliUzmanlik(uzmanlik)}
+                        className={seciliUzmanlik === uzmanlik ? "bg-orange-500 text-white" : ""}
+                      >
+                        {uzmanlik}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </div>
           </div>
         </header>
 
@@ -155,6 +310,8 @@ export default function Home() {
                   contact={arabulucu.email}
                   website={arabulucu.website_url}
                   colorIndex={index}
+                  cities={arabulucu.cities || []}
+                  expertise={arabulucu.expertise}
                 />
               ))}
             </div>

@@ -2,11 +2,19 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { ChevronDown } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { GENEL_UZMANLIKLAR, OZEL_UZMANLIKLAR, SEHIRLER } from '@/constants';
 import "../../app/globals.css";
 
 export default function Basvuru() {
@@ -17,7 +25,12 @@ export default function Basvuru() {
     credentials: "",
     contact: "",
     website: "",
+    cities: [] as string[],
+    expertise: [],
   });
+
+  // Şehir listesi constants dosyasından alınıyor
+
   const [yukleniyor, setYukleniyor] = useState(false);
   const [hata, setHata] = useState("");
 
@@ -98,6 +111,92 @@ export default function Basvuru() {
               required
               placeholder="Arabulucu sicil numaranız"
             />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="city">Şehir</Label>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="w-full justify-between">
+                  {formData.cities.length === 0 ? 'Şehir Seçiniz' : `${formData.cities.length} Şehir Seçili`}
+                  <ChevronDown className="h-5 w-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-full bg-white max-h-[300px] overflow-y-auto" align="start">
+                {SEHIRLER.filter(sehir => sehir !== 'Hepsi').map((sehir) => (
+                  <DropdownMenuItem 
+                    key={sehir} 
+                    onSelect={(e) => {
+                      e.preventDefault();
+                      if (formData.cities.includes(sehir)) {
+                        setFormData({ ...formData, cities: formData.cities.filter(s => s !== sehir) });
+                      } else {
+                        setFormData({ ...formData, cities: [...formData.cities, sehir] });
+                      }
+                    }}
+                    className="flex items-center space-x-2"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={formData.cities.includes(sehir)}
+                      onChange={() => {}}
+                      onClick={(e) => e.stopPropagation()}
+                      className="w-4 h-4"
+                    />
+                    <span>{sehir}</span>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="expertise">Uzmanlık Alanları</Label>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <h3 className="font-medium text-gray-700">Genel Uzmanlık Alanları</h3>
+                <div className="grid grid-cols-2 gap-2">
+                  {GENEL_UZMANLIKLAR.map((uzmanlik) => (
+                    <label key={uzmanlik} className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        checked={formData.expertise.includes(uzmanlik)}
+                        onChange={(e) => {
+                          const updatedExpertise = e.target.checked
+                            ? [...formData.expertise, uzmanlik]
+                            : formData.expertise.filter((exp) => exp !== uzmanlik);
+                          setFormData({ ...formData, expertise: updatedExpertise });
+                        }}
+                        className="w-4 h-4"
+                      />
+                      <span className="text-sm">{uzmanlik}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <h3 className="font-medium text-gray-700">Özel Uzmanlık Alanları</h3>
+                <div className="grid grid-cols-2 gap-2">
+                  {OZEL_UZMANLIKLAR.map((uzmanlik) => (
+                    <label key={uzmanlik} className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        checked={formData.expertise.includes(uzmanlik)}
+                        onChange={(e) => {
+                          const updatedExpertise = e.target.checked
+                            ? [...formData.expertise, uzmanlik]
+                            : formData.expertise.filter((exp) => exp !== uzmanlik);
+                          setFormData({ ...formData, expertise: updatedExpertise });
+                        }}
+                        className="w-4 h-4"
+                      />
+                      <span className="text-sm">{uzmanlik}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="space-y-2">

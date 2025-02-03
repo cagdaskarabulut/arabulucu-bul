@@ -26,6 +26,8 @@ export interface MediatorCardProps {
   contact: string;
   website?: string;
   colorIndex: number;
+  cities: string[];
+  expertise: string[];
 }
 
 export default function MediatorCard({
@@ -35,6 +37,8 @@ export default function MediatorCard({
   contact,
   website,
   colorIndex,
+  cities,
+  expertise,
 }: MediatorCardProps) {
   const bgColor = cardColors[colorIndex % cardColors.length];
 
@@ -61,8 +65,29 @@ export default function MediatorCard({
         <div className="text-sm text-gray-500 mt-1">
           Sicil No: {licenseNo}
         </div>
+        {Array.isArray(cities) && cities.length > 0 && (
+          <div className="text-sm text-gray-500 mt-1 flex flex-wrap items-center gap-2">
+            {cities.map((city, index) => (
+              <span key={index} className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                {city}
+              </span>
+            ))}
+          </div>
+        )}
       </CardHeader>
       <CardContent className="pt-2">
+        {expertise && expertise.length > 0 && (
+          <div className="flex flex-wrap gap-1 mb-2">
+            {expertise.map((exp, index) => (
+              <span
+                key={index}
+                className="bg-orange-100 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded"
+              >
+                {exp}
+              </span>
+            ))}
+          </div>
+        )}
         <p className="text-gray-600 text-sm line-clamp-10 mb-4">
           {credentials}
         </p>
