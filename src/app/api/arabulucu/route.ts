@@ -1,18 +1,6 @@
 import { NextResponse } from 'next/server';
 import { pool } from '@/lib/db';
 
-function turkishToLower(str: string): string {
-  return str
-    .replace(/İ/g, 'i')
-    .replace(/I/g, 'ı')
-    .replace(/Ğ/g, 'ğ')
-    .replace(/Ü/g, 'ü')
-    .replace(/Ş/g, 'ş')
-    .replace(/Ö/g, 'ö')
-    .replace(/Ç/g, 'ç')
-    .toLowerCase();
-}
-
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -77,12 +65,12 @@ export async function GET(request: Request) {
     const offset = (sayfa - 1) * limit;
 
     let query = `SELECT * FROM "arabulucubul-arabulucu" WHERE active IS TRUE`;
-    let queryParams = [];
+    const queryParams = [];
     let paramCount = 1;
     let pattern = '';
 
     if (!sehirler.includes('hepsi') && sehirler.length > 0) {
-      const sehirKosulu = sehirler.map((_, idx) => `$${paramCount} = ANY(cities)`).join(' OR ');
+      const sehirKosulu = sehirler.map(() => `$${paramCount} = ANY(cities)`).join(' OR ');
       query += ` AND (${sehirKosulu})`;
       sehirler.forEach(sehir => {
         queryParams.push(sehir);
@@ -136,7 +124,7 @@ export async function GET(request: Request) {
     const result = await pool.query(query, queryParams);
 
     // Sayım sorgusu için yeni parametre dizisi oluştur
-    let countQueryParams = [];
+    const countQueryParams = [];
     let countParamCount = 1;
     let countQuery = 'SELECT COUNT(*) FROM "arabulucubul-arabulucu" WHERE active IS TRUE';
 

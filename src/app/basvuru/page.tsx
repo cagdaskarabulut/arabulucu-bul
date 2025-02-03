@@ -26,7 +26,7 @@ export default function Basvuru() {
     contact: "",
     website: "",
     cities: [] as string[],
-    expertise: [],
+    expertise: [] as string[],
   });
 
   // Şehir listesi constants dosyasından alınıyor
