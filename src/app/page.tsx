@@ -74,7 +74,7 @@ export default function Home() {
             Arabulucu Listesi
           </h2>
           <p className="text-[var(--primary-color)] max-w-2xl mx-auto mb-4">
-            Türkiye&apos;nin önde gelen arabulucularına buradan ulaşabilirsiniz. İletişim bilgileri ve web siteleri için kartların alt kısmındaki butonları kullanabilirsiniz.
+          Sitemize kayıtlı arabulucuların bilgilerine ve iletişim detaylarına buradan ulaşabilirsiniz. Daha fazla bilgi için kartların alt kısmındaki butonları kullanabilirsiniz.
           </p>
 
           {/* Mobil için kayıt butonu */}

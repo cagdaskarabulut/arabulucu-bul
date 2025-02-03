@@ -1,10 +1,10 @@
 'use client';
 
-import { Inter } from "next/font/google";
+import { Outfit } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Header } from "./components/Header";
 
-const inter = Inter({ subsets: ["latin"] });
+const outfit = Outfit({ subsets: ["latin"], variable: '--font-outfit' });
 
 export default function RootLayout({
   children,
@@ -14,19 +14,33 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <title>Arabulucu Bul - Türkiye'nin En Kapsamlı Arabulucu Arama Platformu</title>
         <meta
           name="description"
-          content="Türkiye&apos;nin en kapsamlı arabulucu arama platformu"
+          content="Türkiye'nin en kapsamlı arabulucu arama ve arabulucu liste platformu. Sicil numarası ile arabulucu sorgulama, arabulucu özgeçmiş ve iletişim bilgilerine hızlı erişim."
         />
         <meta
-          property="og:description"
-          content="Türkiye&apos;nin en kapsamlı arabulucu arama platformu"
+          name="keywords"
+          content="arabulucu, arabulucu bul, arabulucu liste, arabulucu sorgula, arabulucu sicil no, arabuluculuk, hukuki arabulucu, ticari arabulucu, işçi arabulucu, tüketici arabulucu"
         />
+        <meta name="robots" content="index, follow" />
+        <meta name="language" content="Turkish" />
+        <meta name="revisit-after" content="7 days" />
+        <meta name="author" content="ArabulucuBul.com" />
+        
+        {/* Open Graph Meta Tags */}
+        <meta property="og:title" content="Arabulucu Bul - Türkiye'nin En Kapsamlı Arabulucu Arama Platformu" />
+        <meta
+          property="og:description"
+          content="Türkiye'nin en kapsamlı arabulucu arama ve arabulucu liste platformu. Sicil numarası ile arabulucu sorgulama, arabulucu özgeçmiş ve iletişim bilgilerine hızlı erişim."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="tr_TR" />
       </head>
       <body
         className={cn(
           "min-h-screen bg-gradient-to-b from-blue-50 to-white",
-          inter.className
+          outfit.className
         )}
         suppressHydrationWarning
       >

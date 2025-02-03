@@ -1,6 +1,9 @@
 import type { Config } from "tailwindcss";
 
 const config = {
+  fontFamily: {
+    sans: ['var(--font-outfit)'],
+  },
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
