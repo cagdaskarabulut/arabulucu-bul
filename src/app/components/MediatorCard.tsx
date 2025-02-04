@@ -42,14 +42,27 @@ export default function MediatorCard({
 }: MediatorCardProps) {
   const bgColor = cardColors[colorIndex % cardColors.length];
 
-  const handleMailClick = (email: string) => {
-    window.location.href = `mailto:${email}`;
+  const isValidEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
-  const handleWebsiteClick = (url: string) => {
-    // URL'nin http veya https ile başlamasını sağla
-    const fullUrl = url.startsWith('http') ? url : `https://${url}`;
-    window.open(fullUrl, '_blank', 'noopener,noreferrer');
+  const isValidUrl = (url: string): boolean => {
+    try {
+      new URL(url.startsWith('http') ? url : `https://${url}`);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
+  const handleContactClick = (contact: string) => {
+    if (isValidEmail(contact)) {
+      window.location.href = `mailto:${contact}`;
+    } else if (isValidUrl(contact)) {
+      const fullUrl = contact.startsWith('http') ? contact : `https://${contact}`;
+      window.open(fullUrl, '_blank', 'noopener,noreferrer');
+    }
   };
 
   return (
@@ -98,8 +111,8 @@ export default function MediatorCard({
                 <Button
                   variant="outline"
                   size="sm"
+                  onClick={() => handleContactClick(contact)}
                   className="contact-button btn-primary btn-sm bg-[var(--primary-color)]"
-                  onClick={() => handleMailClick(contact)}
                 >
                   <span className="relative z-10 hover:text-[var(--primary-color)]">
                     <Mail className="h-4 w-4 " />
@@ -120,7 +133,7 @@ export default function MediatorCard({
                     variant="outline"
                     size="sm"
                     className="contact-button btn-secondary btn-sm bg-[var(--primary-color)]"
-                    onClick={() => handleWebsiteClick(website)}
+                    onClick={() => handleContactClick(website)}
                   >
                     <span className="relative z-10 hover:text-[var(--secondary-color)]">
                       <Globe className="h-4 w-4 " />
