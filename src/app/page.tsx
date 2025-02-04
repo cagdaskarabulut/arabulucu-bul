@@ -94,18 +94,27 @@ export default function Home() {
           </Button>
 
           {/* Mobil ve tablet için dropdown menüler */}
-          <div className="lg:hidden mb-8 px-4 w-full max-w-md mx-auto space-y-4">
+          <div className="lg:hidden mb-8 px-4 w-full max-w-md mx-auto space-y-4 touch-pan-y">
+            <style jsx global>{`
+              .dropdown-trigger {
+                touch-action: manipulation;
+              }
+              .dropdown-content {
+                touch-action: pan-y pinch-zoom;
+              }
+            `}</style>
             {/* İsim Filtresi */}
-            <DropdownMenu>
+            <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="w-full text-base py-6">
+                <Button variant="outline" className="w-full text-base py-6 mobile-dropdown-trigger">
                   {seciliHarf === 'Hepsi' ? 'Tüm Arabulucular' : `${seciliHarf} ile Başlayanlar`}
                   <ChevronDown className="ml-2 h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent 
-                className="w-[var(--radix-dropdown-menu-trigger-width)] bg-white border-[var(--primary-color)] shadow-lg max-h-[60vh] overflow-y-auto"
+                className="w-[var(--radix-dropdown-menu-trigger-width)] bg-white border-[var(--primary-color)] shadow-lg max-h-[40vh] overflow-y-auto mobile-dropdown-content"
                 align="center"
+                onCloseAutoFocus={(e) => e.preventDefault()}
               >
                 {TURKCE_HARFLER.map((harf) => (
                   <DropdownMenuItem
@@ -124,16 +133,17 @@ export default function Home() {
             </DropdownMenu>
 
             {/* Şehir Filtresi */}
-            <DropdownMenu>
+            <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="w-full text-base py-6 justify-between">
+              <Button variant="outline" className="w-full text-base py-6">
                   {seciliSehirler.includes('Hepsi') ? 'Tüm Şehirler' : `${seciliSehirler.length} Şehir Seçili`}
-                  <ChevronDown className="h-5 w-5" />
+                  <ChevronDown className="ml-2 h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent 
-                className="w-[var(--radix-dropdown-menu-trigger-width)] bg-white border-[var(--primary-color)] shadow-lg max-h-[300px] overflow-y-auto"
-                align="start"
+                className="w-[var(--radix-dropdown-menu-trigger-width)] bg-white border-[var(--primary-color)] shadow-lg max-h-[40vh] overflow-y-auto mobile-dropdown-content"
+                align="center"
+                onCloseAutoFocus={(e) => e.preventDefault()}
               >
                 {SEHIRLER.map((sehir) => (
                   <DropdownMenuItem
@@ -151,31 +161,33 @@ export default function Home() {
                         }
                       }
                     }}
-                    className="flex items-center space-x-2"
+                    className={`py-3 text-base w-full flex items-center ${seciliSehirler.includes(sehir) ? 'bg-orange-500 text-white hover:bg-orange-600' : 'hover:bg-[var(--primary-color)]/10'}`}
                   >
-                    <input
-                      type="checkbox"
-                      checked={seciliSehirler.includes(sehir)}
-                      onChange={() => {}}
-                      onClick={(e) => e.stopPropagation()}
-                      className="w-4 h-4"
-                    />
-                    <span className="text-base">{sehir}</span>
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        checked={seciliSehirler.includes(sehir)}
+                        onChange={() => {}}
+                        onClick={(e) => e.stopPropagation()}
+                        className="w-4 h-4"
+                      />
+                      <span>{sehir}</span>
+                    </div>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
 
             {/* Uzmanlık Filtresi */}
-            <DropdownMenu>
+            <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="w-full text-base py-6">
+                <Button variant="outline" className="w-full text-base py-6 mobile-dropdown-trigger">
                   {seciliUzmanlik === 'Hepsi' ? 'Tüm Uzmanlıklar' : seciliUzmanlik}
                   <ChevronDown className="ml-2 h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent 
-                className="w-[var(--radix-dropdown-menu-trigger-width)] bg-white border-[var(--primary-color)] shadow-lg"
+                className="w-[var(--radix-dropdown-menu-trigger-width)] bg-white border-[var(--primary-color)] shadow-lg dropdown-content"
                 align="center"
               >
                 {TUM_UZMANLIKLAR.map((uzmanlik) => (
@@ -226,12 +238,12 @@ export default function Home() {
               <div className="w-64">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="w-full justify-between">
+                    <Button variant="outline" className="w-full">
                       {seciliSehirler.includes('Hepsi') ? 'Tüm Şehirler' : `${seciliSehirler.length} Şehir Seçili`}
-                      <ChevronDown className="h-5 w-5" />
+                      <ChevronDown className="ml-2 h-5 w-5" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-64 bg-white max-h-[300px] overflow-y-auto" align="start">
+                  <DropdownMenuContent className="w-64 max-h-[300px] overflow-y-auto bg-white">
                     {SEHIRLER.map((sehir) => (
                       <DropdownMenuItem
                         key={sehir}
@@ -248,7 +260,8 @@ export default function Home() {
                             }
                           }
                         }}
-                        className="flex items-center space-x-2"
+                        className={`flex items-center space-x-2 ${seciliSehirler.includes(sehir) ? "bg-orange-500 text-white" : ""}`}
+
                       >
                         <input
                           type="checkbox"
