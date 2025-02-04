@@ -35,9 +35,11 @@ export default function Basvuru() {
   const [hata, setHata] = useState("");
 
   const validateContact = (contact: string) => {
-    // Email veya URL kontrolü
+    // Email kontrolü
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const urlRegex = /^(https?:\/\/)/i;
+    
+    // URL kontrolü - www ile başlayan veya domain.com formatında olan
+    const urlRegex = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\.[a-z]{2,})+$/i;
     
     return emailRegex.test(contact) || urlRegex.test(contact);
   };
@@ -54,6 +56,7 @@ export default function Basvuru() {
     setYukleniyor(true);
 
     try {
+      // Arabulucu başvurusunu kaydet
       const response = await fetch("/api/arabulucu", {
         method: "POST",
         headers: {
@@ -63,6 +66,19 @@ export default function Basvuru() {
       });
 
       if (response.ok) {
+        // E-posta gönder
+        await fetch("/api/send-email", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.contact,
+            phoneNumber: formData.licenseNo,
+          }),
+        });
+
         router.push("/basvuru/basarili");
       } else {
         const data = await response.json();
@@ -215,9 +231,13 @@ export default function Basvuru() {
 
           <div className="space-y-2">
             <Label htmlFor="contact">İletişim (E-posta veya Web Sitesi)</Label>
+            <p className="text-sm text-gray-500">
+              E-posta adresi (örn: isim@domain.com) veya web sitesi adresi (örn: www.siteadi.com)
+            </p>
             <Input
               id="contact"
               value={formData.contact}
+              placeholder="ornek@email.com veya www.siteadi.com"
               onChange={(e) =>
                 setFormData({ ...formData, contact: e.target.value })
               }
