@@ -242,11 +242,7 @@ export default function Basvuru() {
                 setFormData({ ...formData, contact: e.target.value })
               }
               required
-              placeholder="E-posta veya Websitesi"
             />
-            <p className="text-sm text-gray-500">
-              E-posta veya Websitesi
-            </p>
           </div>
 
           <div className="space-y-2">
