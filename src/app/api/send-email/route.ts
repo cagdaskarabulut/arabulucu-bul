@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: 'cagdas.karabulut@gmail.com',
-      subject: 'Yeni Arabulucu Başvurusu',
+      subject: 'Arabulucu Bul - Yeni Arabulucu Başvurusu',
       html: `
         <h3>Yeni bir arabulucu başvurusu alındı</h3>
         <p><strong>İsim:</strong> ${name}</p>
