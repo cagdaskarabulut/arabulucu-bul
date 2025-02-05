@@ -1,8 +1,49 @@
 import { NextResponse } from 'next/server';
 import { pool } from '@/lib/db';
+import { RateLimiter } from 'limiter';
+import { headers } from 'next/headers';
+
+// Her IP için dakikada maksimum 5 istek
+const limiter = new RateLimiter({
+  tokensPerInterval: 5,
+  interval: 'minute',
+  fireImmediately: true
+});
+
+// IP bazlı rate limiter map
+const ipLimiters = new Map<string, RateLimiter>();
+
+async function getClientIp(): Promise<string> {
+  const headersList = await headers();
+  const forwardedFor = headersList.get('x-forwarded-for');
+  if (forwardedFor) {
+    return forwardedFor.split(',')[0].trim();
+  }
+  return 'unknown';
+}
 
 export async function POST(request: Request) {
   try {
+    // IP bazlı rate limiting kontrolü
+    const clientIp = await getClientIp();
+    
+    if (!ipLimiters.has(clientIp)) {
+      ipLimiters.set(clientIp, new RateLimiter({
+        tokensPerInterval: 5,
+        interval: 'minute',
+        fireImmediately: true
+      }));
+    }
+    
+    const ipLimiter = ipLimiters.get(clientIp)!;
+    const hasTokens = await ipLimiter.tryRemoveTokens(1);
+    
+    if (!hasTokens) {
+      return NextResponse.json(
+        { error: 'Çok fazla istek gönderdiniz. Lütfen bir süre bekleyin.' },
+        { status: 429 }
+      );
+    }
     const body = await request.json();
     const { name, credentials, licenseNo, contact, website, cities, expertise } = body;
 
