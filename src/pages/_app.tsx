@@ -25,6 +25,10 @@ function CustomApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>Welcome!</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <meta
+          name="google-site-verification"
+          content="mcF3__vXdmLl7JaonN29Ku4IIeQs5oH_MWokPa8p6U8"
+        />
       </Head>
 
       <Component {...pageProps} />
