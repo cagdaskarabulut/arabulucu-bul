@@ -26,7 +26,7 @@ export async function POST(request: Request) {
   try {
     // IP bazlı rate limiting kontrolü
     const clientIp = await getClientIp();
-    
+
     if (!ipLimiters.has(clientIp)) {
       ipLimiters.set(clientIp, new RateLimiter({
         tokensPerInterval: 5,
@@ -34,10 +34,10 @@ export async function POST(request: Request) {
         fireImmediately: true
       }));
     }
-    
+
     const ipLimiter = ipLimiters.get(clientIp)!;
     const hasTokens = await ipLimiter.tryRemoveTokens(1);
-    
+
     if (!hasTokens) {
       return NextResponse.json(
         { error: 'Çok fazla istek gönderdiniz. Lütfen bir süre bekleyin.' },
@@ -127,7 +127,7 @@ export async function GET(request: Request) {
 
     if (harf !== 'hepsi') {
       // Türkçe karakter eşleştirmesi için pattern oluşturuyoruz
-      switch(harf.toLowerCase()) {
+      switch (harf.toLowerCase()) {
         case 'o':
           pattern = '(O|Ö|o|ö)';
           break;
@@ -149,19 +149,17 @@ export async function GET(request: Request) {
         default:
           pattern = `[${harf.toUpperCase()}${harf.toLowerCase()}]`;
       }
-      
+
       query += ` AND LEFT(name, 1) SIMILAR TO '${pattern}'`;
     }
 
-    query += harf === 'hepsi' 
-      ? ` ORDER BY id DESC` 
+    query += harf === 'hepsi'
+      ? ` ORDER BY id DESC`
       : ` ORDER BY name ASC`;
 
     query += ` LIMIT $${paramCount} OFFSET $${paramCount + 1}`;
     queryParams.push(Number(limit), Number(offset));
 
-    console.log('Final query:', query);
-    console.log('Final params:', queryParams);
     const result = await pool.query(query, queryParams);
 
     // Sayım sorgusu için yeni parametre dizisi oluştur
@@ -188,16 +186,13 @@ export async function GET(request: Request) {
       countQuery += ` AND LEFT(name, 1) SIMILAR TO '${pattern}'`;
     }
 
-    console.log('Count query:', countQuery);
-    console.log('Count params:', countQueryParams);
     const totalCount = await pool.query(countQuery, countQueryParams);
 
     const response = {
       arabulucular: result.rows,
       toplam: parseInt(totalCount.rows[0].count)
     };
-    
-    console.log('Final response:', response);
+
     return NextResponse.json(response);
   } catch (error) {
     console.error('Arabulucular listelenirken hata oluştu:', error);

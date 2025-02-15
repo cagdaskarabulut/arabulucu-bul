@@ -10,7 +10,7 @@ export async function POST(request: Request) {
 
     if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
       const response = NextResponse.json({ success: true });
-      
+
       // Admin token'ı oluştur (24 saat geçerli)
       response.cookies.set({
         name: 'admin_token',
