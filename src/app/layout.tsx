@@ -3,6 +3,7 @@
 import { Outfit } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Header } from "./components/Header";
+import Script from "next/script";
 
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
@@ -49,6 +50,17 @@ export default function RootLayout({
         )}
         suppressHydrationWarning
       >
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-8KTDF3483E" />
+        <Script id="google-analytics">
+          {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+ 
+          gtag('config', 'G-8KTDF3483E');
+        `}
+        </Script>
+
         <meta
           name="google-site-verification"
           content="mcF3__vXdmLl7JaonN29Ku4IIeQs5oH_MWokPa8p6U8"
