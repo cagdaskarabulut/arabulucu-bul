@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
 import { Outfit } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Header } from "./components/Header";
 
-const outfit = Outfit({ subsets: ["latin"], variable: '--font-outfit' });
+const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export default function RootLayout({
   children,
@@ -14,7 +14,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <title>Arabulucu Bul - Türkiye'nin En Kapsamlı Arabulucu Arama Platformu</title>
+        <title>
+          Arabulucu Bul - Türkiye'nin En Kapsamlı Arabulucu Arama Platformu
+        </title>
         <meta
           name="description"
           content="Türkiye'nin en kapsamlı arabulucu arama ve arabulucu liste platformu. Sicil numarası ile arabulucu sorgulama, arabulucu özgeçmiş ve iletişim bilgilerine hızlı erişim."
@@ -27,9 +29,12 @@ export default function RootLayout({
         <meta name="language" content="Turkish" />
         <meta name="revisit-after" content="7 days" />
         <meta name="author" content="ArabulucuBul.com" />
-        
+
         {/* Open Graph Meta Tags */}
-        <meta property="og:title" content="Arabulucu Bul - Türkiye'nin En Kapsamlı Arabulucu Arama Platformu" />
+        <meta
+          property="og:title"
+          content="Arabulucu Bul - Türkiye'nin En Kapsamlı Arabulucu Arama Platformu"
+        />
         <meta
           property="og:description"
           content="Türkiye'nin en kapsamlı arabulucu arama ve arabulucu liste platformu. Sicil numarası ile arabulucu sorgulama, arabulucu özgeçmiş ve iletişim bilgilerine hızlı erişim."
@@ -44,7 +49,10 @@ export default function RootLayout({
         )}
         suppressHydrationWarning
       >
-        
+        <meta
+          name="google-site-verification"
+          content="mcF3__vXdmLl7JaonN29Ku4IIeQs5oH_MWokPa8p6U8"
+        />
         {/* Navigation Bar */}
         <Header />
 
@@ -73,8 +81,8 @@ export default function RootLayout({
                 </p>
                 <p>
                   Bu internet sitesinde yer alan tüm bilgiler, 6325 sayılı Hukuk
-                  Uyuşmazlıklarında Arabuluculuk Kanunu ve ilgili
-                  yönetmeliklere uygun olarak hazırlanmıştır.
+                  Uyuşmazlıklarında Arabuluculuk Kanunu ve ilgili yönetmeliklere
+                  uygun olarak hazırlanmıştır.
                 </p>
               </div>
               <div>
@@ -82,16 +90,16 @@ export default function RootLayout({
                   Kişisel Verilerin Korunması
                 </h3>
                 <p className="mb-2">
-                  Sitemizde sunulan içerikler yalnızca bilgilendirme amaçlıdır ve
-                  resmi Arabulucular Sicili verilerine dayanmaktadır. Sitede yer
-                  alan arabulucuların kişisel bilgileri, 6698 sayılı Kişisel
+                  Sitemizde sunulan içerikler yalnızca bilgilendirme amaçlıdır
+                  ve resmi Arabulucular Sicili verilerine dayanmaktadır. Sitede
+                  yer alan arabulucuların kişisel bilgileri, 6698 sayılı Kişisel
                   Verilerin Korunması Kanunu (KVKK) hükümleri çerçevesinde,
                   kendilerinin açık rızası ile paylaşılmaktadır.
                 </p>
                 <p>
                   Kullanıcıların, burada yer alan bilgileri başka bir amaçla
-                  kullanmamaları ve ticari faaliyetlerde bulunmamaları gerektiğini
-                  önemle hatırlatırız.
+                  kullanmamaları ve ticari faaliyetlerde bulunmamaları
+                  gerektiğini önemle hatırlatırız.
                 </p>
               </div>
             </div>
