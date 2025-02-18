@@ -4,6 +4,7 @@ import { Outfit } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Header } from "./components/Header";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/react";
 
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
@@ -121,6 +122,7 @@ export default function RootLayout({
             </p>
           </div>
         </footer>
+        <Analytics />
       </body>
     </html>
   );
