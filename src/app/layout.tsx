@@ -7,7 +7,6 @@ import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
 
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
-
 export default function RootLayout({
   children,
 }: {
